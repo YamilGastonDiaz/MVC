@@ -1,0 +1,44 @@
+﻿@model dominio.Disco
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<div class="container mb-4">
+    <section class="row justify-content-center">
+        <div class="text-center">
+            <h1>Detalle Disco</h1>
+        </div>
+
+        <hr />
+
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="@Model.UrlTapa" class="img-fluid rounded-start" style="height:250px; object-fit:cover;" alt="...">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <span class="m-0 p-0 fw-bold" style="font-size:12px;">TITULO:</span>
+                        <h5 class="card-title">@Model.Titulo</h5>
+                        <span class="m-0 p-0 fw-bold" style="font-size:12px;">FECHA LANZAMIENTO:</span>
+                        <p class="card-text">@Model.FechaLanzamiento</p>
+                        <span class="m-0 p-0 fw-bold" style="font-size:12px;">CANTIDAD DE CANCIONES:</span>
+                        <p class="card-text">@Model.CantidadCanciones</p>
+                        <p class="card-text"><small class="text-body-secondary">GENERO: @Model.Estilo.Descripcion | EDICION: @Model.TipoEdicion.Descripcion</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mb-3 text-center">
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+            <a class="btn btn-secondary" asp-action="Index">Volver</a>
+        </div>
+    </section>    
+</div>
+
+
+
+
+

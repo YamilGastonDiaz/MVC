@@ -1,0 +1,57 @@
+﻿@model dominio.Disco
+
+@{
+    ViewData["Title"] = "Editando Disco";
+}
+
+<div class="container mb-4">
+    <section class="row justify-content-center">
+        <div class="text-center">
+            <h1>Editar Disco</h1>
+        </div>
+
+        <hr />
+
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-3">
+                    <label asp-for="Titulo" class="control-label"></label>
+                    <input asp-for="Titulo" class="form-control" />
+                    <span asp-validation-for="Titulo" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="FechaLanzamiento" class="control-label"></label>
+                    <input asp-for="FechaLanzamiento" class="form-control" />
+                    <span asp-validation-for="FechaLanzamiento" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="CantidadCanciones" class="control-label"></label>
+                    <input asp-for="CantidadCanciones" class="form-control" />
+                    <span asp-validation-for="CantidadCanciones" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="cpntrol-label">Estilo</label>
+                    <select class="form-select" asp-for="Estilo.Id" asp-items="ViewBag.Estilo"></select>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="cpntrol-label">Tipo Edicion</label>
+                    <select class="form-select" asp-for="TipoEdicion.Id" asp-items="ViewBag.TipoEdicion"></select>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="UrlTapa" class="control-label"></label>
+                    <input asp-for="UrlTapa" class="form-control" />
+                    <span asp-validation-for="UrlTapa" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="submit" value="Editar" class="btn btn-primary" />
+                    <a class="btn btn-secondary" asp-action="Index">Volver</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<dominio.Disco>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <section class="row justify-content-center">
+        <div class="text-center">
+            <h1>Discos Stu</h1>
+        </div>
+        <div>
+            <p>
+                <a class="btn btn-primary" asp-action="Create">Crear Nuevo</a>
+            </p>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow">
+
+                        <img src="@item.UrlTapa" class="card-img-top" style="height:200px; object-fit:cover;" />
+
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Titulo</h4>
+                            <span>@item.Estilo.Descripcion</span> /
+                            <span>@item.TipoEdicion.Descripcion</span>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>
