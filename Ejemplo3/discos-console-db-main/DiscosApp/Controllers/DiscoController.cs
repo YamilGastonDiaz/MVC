@@ -9,10 +9,18 @@ namespace DiscosApp.Controllers
     public class DiscoController : Controller
     {
         // GET: DiscoController
-        public ActionResult Index()
+        public ActionResult Index(string filtro)
         {
             DiscoNegocio negocio = new DiscoNegocio();
-            return View(negocio.listar());
+            var disco = negocio.listar();
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                disco = disco.FindAll(d => d.Titulo.Contains(filtro));
+            }
+
+            ViewBag.filtro = filtro;
+            return View(disco);
         }
 
         // GET: DiscoController/Details/5

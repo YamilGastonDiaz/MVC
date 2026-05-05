@@ -55,9 +55,7 @@ namespace negocio
                 throw ex;
             }
 
-        }
-
-        
+        }       
 
         public void agregar(Disco nuevo)
         {
@@ -85,8 +83,6 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
-       
 
         public void modificar(Disco disco)
         {
