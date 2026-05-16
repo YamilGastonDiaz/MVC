@@ -1,0 +1,29 @@
+﻿@model Exposicion
+
+
+<div class="container">
+    <section class="row justify-content-center">
+        <div class="row">
+            @foreach (var item in Model.ObrasExpuestas)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow">
+
+                        <img src="@item.UrlImagen" class="card-img-top" style="height:200px; object-fit:cover;" />
+
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Titulo</h4>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> *@ |
+                            <a asp-controller="Obra" asp-action="Details" asp-route-id="@item.Id" asp-route-idExpo="@Model.Id">Details</a> |
+                            @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>

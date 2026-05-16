@@ -1,0 +1,33 @@
+﻿@model List<Obra>
+
+@{
+    ViewData["Title"] = "Obras expuestas";
+}
+
+<form asp-action="SelectObras" method="post">
+    <input type="hidden" name="expoId" value="@ViewBag.idExpo" />
+    <table>
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Imagen</th>
+                <th>Seleccion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obra in Model)
+            {
+                <tr>
+                    <td>@obra.Titulo</td>
+                    <td>@obra.Artista.Nombre</td>
+                    <td><img src="@obra.UrlImagen" height="50" alt="Alternate Text" /></td>
+                    <td>
+                        <input type="checkbox" class="form-check" name="obraIds" value="@obra.Id" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Aceptar</button>
+</form>

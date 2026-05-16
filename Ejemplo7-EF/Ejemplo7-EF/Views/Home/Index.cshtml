@@ -1,0 +1,32 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Galeria de Artes Virtual";
+}
+
+@await Html.PartialAsync("_CarrouselHome", Model.Obras)
+
+<div class="container">
+    <section class="row justify-content-center">
+        <div class="row">
+            @foreach (var expo in Model.Exposiciones)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow">
+
+                        <div class="card-body">
+                            <h6 class="card-title">@expo.Nombre</h6>
+                            <p><b>Fecha Inicio:</b> <span>@expo.FechaInicio.ToShortDateString()</span> </p>
+                            <p><b>Fecha Fin:</b> <span>@expo.FechaFin.ToShortDateString()</span ></p>                            
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <a asp-controller="Exposicion" asp-action="Details" asp-route-id="@expo.Id">Details</a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>
