@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Ejemplo8_EF.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ejemplo8_EF.Controllers
@@ -18,6 +19,7 @@ namespace Ejemplo8_EF.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

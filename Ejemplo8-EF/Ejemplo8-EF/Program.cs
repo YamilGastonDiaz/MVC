@@ -7,6 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Authorization a nivel configuracion general
+//options =>
+//{
+//    options.Filters.Add(new AuthorizeFilter(
+//        new AuthorizationPolicyBuilder()
+//            .RequireAuthenticatedUser()
+//            .Build()
+//    ));
+//}
+
 builder.Services.AddDbContext<UserDbContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -14,29 +24,37 @@ builder.Services
     .AddDefaultIdentity<IdentityUser>(options =>
     {
         //Password
-        options.Password.RequiredLength = 8;
-        options.Password.RequireDigit = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireUppercase = false;
+        //options.Password.RequiredLength = 8;
+        //options.Password.RequireDigit = true;
+        //options.Password.RequireLowercase = true;
+        //options.Password.RequireUppercase = false;
         options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequiredUniqueChars = 1;
+        //options.Password.RequiredUniqueChars = 1;
 
         //SignIn
-        options.SignIn.RequireConfirmedAccount = true;
-        options.SignIn.RequireConfirmedEmail = true;
-        options.SignIn.RequireConfirmedPhoneNumber = false;
+        options.SignIn.RequireConfirmedAccount = false;
+        //options.SignIn.RequireConfirmedEmail = true;
+        //options.SignIn.RequireConfirmedPhoneNumber = false;
 
         //User
-        options.User.RequireUniqueEmail = true;
+        //options.User.RequireUniqueEmail = true;
 
         //Bloqueo
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-        options.Lockout.MaxFailedAccessAttempts = 5;
-        options.Lockout.AllowedForNewUsers = true;
+        //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+        //options.Lockout.MaxFailedAccessAttempts = 5;
+        //options.Lockout.AllowedForNewUsers = true;
 
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<UserDbContext>();
+
+builder.Services.ConfigureApplicationCookie(o =>
+{
+    o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    o.SlidingExpiration = true;
+    o.LoginPath = "/Identity/Account/Login";
+    o.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 
 builder.Services.AddRazorPages();
 
