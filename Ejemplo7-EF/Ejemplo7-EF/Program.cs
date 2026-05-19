@@ -1,4 +1,5 @@
 using Ejemplo7_EF.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,26 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<GaleriaDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services
+    .AddDefaultIdentity<IdentityUser>(options =>
+    {
+        options.Password.RequireNonAlphanumeric = false;
+        options.SignIn.RequireConfirmedAccount = false;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<GaleriaDbContext>();
+
+builder.Services.ConfigureApplicationCookie(o =>
+{
+    o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    o.SlidingExpiration = true;
+    o.LoginPath = "/Identity/Account/Login";
+    o.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
+builder.Services.AddRazorPages();
+
 
 var app = builder.Build();
 
@@ -29,6 +50,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -39,4 +61,5 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
+app.MapRazorPages();
 app.Run();

@@ -1,9 +1,10 @@
 ﻿using Ejemplo7_EF.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ejemplo7_EF.Data
 {
-    public class GaleriaDbContext : DbContext
+    public class GaleriaDbContext : IdentityDbContext
     {
         public GaleriaDbContext(DbContextOptions options) : base(options){}
 
@@ -13,6 +14,8 @@ namespace Ejemplo7_EF.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Obra>()
                 .HasMany(x => x.ExposicionesObras)
                 .WithMany(x => x.ObrasExpuestas)

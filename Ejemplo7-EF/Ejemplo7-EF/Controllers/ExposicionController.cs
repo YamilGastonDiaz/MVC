@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ejemplo7_EF.Data;
 using Ejemplo7_EF.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ejemplo7_EF.Controllers
 {
@@ -19,12 +20,14 @@ namespace Ejemplo7_EF.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = Roles.Admin)]
         // GET: Exposicion
         public async Task<IActionResult> Index()
         {
             return View(await _context.Exposiciones.ToListAsync());
         }
 
+        [Authorize]
         // GET: Exposicion/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,6 +47,7 @@ namespace Ejemplo7_EF.Controllers
             return View(exposicion);
         }
 
+        [Authorize(Roles = Roles.Admin)]
         // GET: Exposicion/Create
         public IActionResult Create()
         {
@@ -53,6 +57,7 @@ namespace Ejemplo7_EF.Controllers
         // POST: Exposicion/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,FechaInicio,FechaFin")] Exposicion exposicion)
@@ -67,6 +72,7 @@ namespace Ejemplo7_EF.Controllers
         }
 
         // GET: Exposicion/Edit/5
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,6 +93,7 @@ namespace Ejemplo7_EF.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,FechaInicio,FechaFin")] Exposicion exposicion)
         {
             if (id != exposicion.Id)
@@ -118,6 +125,7 @@ namespace Ejemplo7_EF.Controllers
         }
 
         // GET: Exposicion/Delete/5
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +146,7 @@ namespace Ejemplo7_EF.Controllers
         // POST: Exposicion/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var exposicion = await _context.Exposiciones.FindAsync(id);
@@ -197,6 +206,7 @@ namespace Ejemplo7_EF.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> QuitarObra(int idExpo, Guid idObra)
         {
             var expo = await _context.Exposiciones

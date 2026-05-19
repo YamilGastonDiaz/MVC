@@ -32,12 +32,21 @@
 </div>
 
 @await Html.PartialAsync("_ObrasExpuestas", Model)
-
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a> |
-    <a asp-action="SelectObras" asp-route-id="@Model.Id">Add to Obras</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
+
+@if (User.IsInRole(Roles.Admin))
+{
+    <p>
+        -----------------------------------------------------------------------------------------
+    </p>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a> |
+        <a asp-action="SelectObras" asp-route-id="@Model.Id">Add to Obras</a>
+    </div>
+}
 
 @if (Model.ObrasExpuestas == null || !Model.ObrasExpuestas.Any())
 {
@@ -45,24 +54,26 @@
 }
 else
 {
-
-    <table>
-        <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Imagen</th>
-                <th>Quitar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obra in Model.ObrasExpuestas)
-            {
+    @if (User.IsInRole(Roles.Admin))
+    {
+        <table>
+            <thead>
                 <tr>
-                    <td>@obra.Titulo</td>
-                    <td><img src="@obra.UrlImagen" height="50" alt="Alternate Text" /></td>
-                    <td><a asp-action="QuitarObra" asp-route-idExpo="@Model.Id" asp-route-idObra="@obra.Id" class="btn btn-danger">Eliminar</a></td>
+                    <th>Titulo</th>
+                    <th>Imagen</th>
+                    <th>Quitar</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var obra in Model.ObrasExpuestas)
+                {
+                    <tr>
+                        <td>@obra.Titulo</td>
+                        <td><img src="@obra.UrlImagen" height="50" alt="Alternate Text" /></td>
+                        <td><a asp-action="QuitarObra" asp-route-idExpo="@Model.Id" asp-route-idObra="@obra.Id" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
